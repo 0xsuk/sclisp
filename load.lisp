@@ -1,2 +1,3 @@
 (pushnew (uiop:getcwd) ql:*local-project-directories*)
-(ql:quickload :cl-collider)
+(ql:quickload :sclisp)
+(asdf:load-system :sclisp)
