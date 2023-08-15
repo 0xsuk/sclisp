@@ -2,6 +2,11 @@
 	:name "sclisp"
 	:depends-on (
 							 :cl-arrows
-							 :cl-collider)
+							 :cl-collider
+							 :iterate
+							 :sc-extensions
+							 :vgplot)
 	:serial t
-	:components ((:file "package")))
+	:components ((:file "package")
+							 (:file "setup")
+							 (:file "util")))

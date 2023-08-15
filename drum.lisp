@@ -1,0 +1,18 @@
+(in-package :sclisp)
+
+(defsynth drum-machine ()
+  (let* ((tempo (impulse.ar 4))
+         (snare (-<> (pulse-divider.ar tempo 4 2)
+										 (decay2.ar <> 0.005 0.5)
+										 (white-noise.ar <>)))
+				 (bdrun (-<> (pulse-divider.ar tempo 4 0)
+										 (decay2.ar <> 0.005 0.5)
+										 (sin-osc.ar (line.ar 120 60 1) 0 <>)
+										 ))
+				 (hihat (-<> (decay2.ar tempo 0.005 0.5)
+										 (* (white-noise.ar 1) <>)
+										 (hpf.ar <> 10000)))
+				 )
+    (out.ar 0 (* 0.4 (+ snare hihat bdrun) 2))))
+
+(play (synth 'drum-machine))
