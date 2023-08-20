@@ -22,9 +22,9 @@
 
 (defvar *root* 0)
 
-(clock-bpm 150)
+(clock-bpm 95)
 
-(defvar *hihat* (buffer-read "./hihat.aif"))
+(defvar *hihat* (buffer-read "./sample/hihat.aif"))
 (defvar *kick* (buffer-read "~/music/Kick-808.aif"))
 (defvar *snare* (buffer-read "~/music/Snare-909-Tune8-s.wav"))
 
@@ -70,15 +70,17 @@
 
 (defun drum-kit (beat dur i)
 	(at-beat beat (synth 'sample-play :bufnum *hihat* :gain
-											 (if (find (mod i 16) '(0)) 2 .3)))
-	(when (find (mod i 16) '(0 5 10 15))
-		(at-beat beat (synth 'sample-play :bufnum *kick* :gain .7)))
-	(alexandria:when-let ((pos (find (mod i 16) '(4 12))))
-		(at-beat beat (synth 'sample-play :bufnum *snare* :gain 1 :rev (if (= pos 12) .1 .0))))
+											 (if (= 0 (mod i 64)) 2 1)))
+	(when (find (mod i 8) '(0 4))
+		(at-beat beat (synth 'sample-play :bufnum *kick* :gain .2)))
+	(when (find (mod i 8) '(2 6))
+		(at-beat beat (synth 'sample-play :bufnum *snare* :gain .1)))
+	;; (alexandria:when-let ((pos (find (mod i 16) '(4 12))))
+		;; (at-beat beat (synth 'sample-play :bufnum *snare* :gain 1 :rev (if (= pos 12) .1 .0))))
 	(let ((next (+ beat dur)))
 		(clock-add next 'drum-kit next dur (+ i 1))))
 
-(drum-kit (clock-quant 4) 1/4 0)
+(drum-kit (clock-quant 1) 1/4 0)
 
 (defsynth disk_writer ((out_buf_num 99))
     (disk-out.ar out_buf_num (in.ar 0)))
