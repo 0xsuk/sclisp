@@ -5,7 +5,7 @@
 							 :cl-collider
 							 :iterate
 							 :sc-extensions
-							 :vgplot)
+							 :kai)
 	:serial t
 	:components ((:file "package")
 							 (:file "setup")
