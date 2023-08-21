@@ -2,6 +2,15 @@
 
 (defvar *b*)
 
+(defsynth sample-play ((bufnum 0) (amp (dbamp -5)))
+	(-<>>
+	 (buf-rate-scale.ir bufnum)
+	 (play-buf.ar 2 bufnum <> :act :free)
+	 (* amp)
+	 (out.ar 0)
+	 )
+	)
+
 (defmacro draw (ugen &key (frames 4800) (chanls 1))
 	`(progn
 		 (setf *b* (buffer-alloc ,frames :chanls ,chanls))
