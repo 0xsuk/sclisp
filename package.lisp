@@ -4,6 +4,7 @@
 	 :cl-arrows
 	 :cl-collider
 	 :sc-user
-	 :sc-extensions)
+	 :sc-extensions
+   :suk.flow)
 	)
 
