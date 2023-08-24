@@ -10,4 +10,8 @@
   :serial t
   :components ((:file "package")
                (:file "setup")
-               (:file "util")))
+               (:file "util")
+               (:module "sound"
+                :components        
+                #.(loop for file in (directory "sound/*.lisp")
+                        collect `(:file ,(pathname-name file))))))
