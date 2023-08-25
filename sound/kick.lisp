@@ -40,3 +40,18 @@
     ;; (draw <> :frames 48000)
     (out.ar 0)
 	 ))
+
+(defsynth kick3 ()
+  (flow
+    (env-gen.ar (env '(1 .5 .2 0)
+                     '(.0001 .01 .5)
+                     '(-1 -5)
+                     ) :act :free) :as freqenv
+    (env-gen.ar (env '(1 .5 .2 0)
+                     '(.01 .05 .8))) :as ampenv
+    [400 600]
+    (* freqenv)
+    (sin-osc.ar <> 0 ampenv)
+    (sum)
+    (draw <> :frames 48000)
+    (out.ar 0)))
