@@ -11,12 +11,14 @@
 	 )
 	)
 
-(defmacro draw (ugen &key (frames 4800) (chanls 1))
+(defmacro draw (ugen &key (frames 4800) (chanls 1) (sec))
+  (when sec (setf frames (* 48000 sec)))
 	`(progn
 		 (setf *b* (buffer-alloc ,frames :chanls ,chanls))
 		 (record-buf.ar ,ugen *b* :loop 0)))
 
-(defmacro draw-proxy (ugen &key (frames 4800) (mul 0) (chanls 1))
+(defmacro draw-proxy (ugen &key (frames 4800) (mul 0) (chanls 1) (sec))
+  (when sec (setf frames (* 48000 sec)))
 	`(progn
 		 (setf *b* (buffer-alloc ,frames :chanls ,chanls))
 		 (proxy :draw (* ,mul (record-buf.ar ,ugen *b* :loop 0)))))
